@@ -58,7 +58,7 @@ class ConvStem(nn.Module):
         
         self.proj = nn.Linear(128, emb_dim, bias=False)
         
-        self.clf_token = nn.Parameter(torch.randn((batch_size, 1, emb_dim)), requires_grad=True)
+        self.clf_token = nn.Parameter(torch.randn((1, 1, emb_dim)), requires_grad=True)
         self.pos_token = nn.Parameter(torch.randn((batch_size, 17, emb_dim)), requires_grad=True)
 
     def forward(self, x):
@@ -69,7 +69,9 @@ class ConvStem(nn.Module):
         
         x = self.proj(x)
         
-        x = torch.cat([self.clf_token, x], dim=1)
+        clf_token = self.clf_token.expand(x.shape[0], -1, -1)
+        
+        x = torch.cat([clf_token, x], dim=1)
         x = x + self.pos_token
 
         return x
