@@ -82,15 +82,20 @@ class ConvStem(nn.Module):
 
 | Implementation | Parameters   | Loss   | F1   |
 |----------------|--------|--------|------------|
-| Custom   | **78M** | 1.0565 | **62.91%** |
+| Custom   | **78M** | 1.0565 | **63.51%** |
 | Hugging face   | **85M** | 1.2100 | **56.19%** |
 
 
 ## Graphs
 
-![image](https://github.com/user-attachments/assets/cad3e72c-471a-4117-a85e-fbc21867afbe)
+![image](https://github.com/user-attachments/assets/b8369726-f4f7-45df-b2f3-4c125e65cf5a)
 
-![image](https://github.com/user-attachments/assets/a281a57f-c76b-4cd7-8ade-35342f80f160)
 
-![image](https://github.com/user-attachments/assets/fb813d46-cfca-425c-a26a-69961880254a)
+![image](https://github.com/user-attachments/assets/6efdb2fe-b0f2-4d56-bf65-aaf44a4835e3)
+
+
+![image](https://github.com/user-attachments/assets/db7c798f-f228-4f35-83c2-1e52eb45235c)
+
+
+
 
