@@ -1,0 +1,7 @@
+{"obj": {"type": "AssignString", "path": ["sys", "name"], "value": "Untitled"}, "version": 1, "at": 1721996301.008576}
+{"obj": {"type": "AssignString", "path": ["sys", "description"], "value": ""}, "version": 2, "at": 1721996301.008576}
+{"obj": {"type": "AssignString", "path": ["monitoring", "164382d2", "hostname"], "value": "DESKTOP-SO4DDQB"}, "version": 3, "at": 1721996301.008576}
+{"obj": {"type": "AssignString", "path": ["sys", "hostname"], "value": "DESKTOP-SO4DDQB"}, "version": 4, "at": 1721996301.008576}
+{"obj": {"type": "AssignString", "path": ["monitoring", "164382d2", "pid"], "value": "24144"}, "version": 5, "at": 1721996301.008576}
+{"obj": {"type": "AssignString", "path": ["monitoring", "164382d2", "tid"], "value": "8660"}, "version": 6, "at": 1721996301.008576}
+{"obj": {"type": "AssignBool", "path": ["sys", "failed"], "value": false}, "version": 7, "at": 1721996301.008576}

@@ -1,0 +1,10 @@
+{
+  "mode": "async",
+  "containerId": "9ca1000e-e99f-48b5-a44a-7ea33eb9f7aa",
+  "containerType": "run",
+  "structureVersion": 1,
+  "os": "Windows-10-10.0.19045-SP0",
+  "pythonVersion": "3.11.6 (tags/v3.11.6:8b6ee5b, Oct  2 2023, 14:57:12) [MSC v.1935 64 bit (AMD64)]",
+  "neptuneClientVersion": "1.8.6",
+  "createdAt": "2024-07-28T07:50:47.236485"
+}
