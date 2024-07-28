@@ -4,20 +4,24 @@ from torch import nn
 
 
 class PatchEmbeddingLayer(nn.Module):
-    def __init__(self, patch_size, emb_dim, batch_size):
+    def __init__(self, patch_size, emb_dim):
         super(PatchEmbeddingLayer, self).__init__()
         
         self.patch_conv = nn.Conv2d(3, out_channels=emb_dim, kernel_size=patch_size, stride=patch_size)
-        self.clf_token = nn.Parameter(torch.randn((batch_size, 1, emb_dim)), requires_grad=True)
-        self.pos_token = nn.Parameter(torch.randn((batch_size, 17, emb_dim)), requires_grad=True)
+        self.clf_token = nn.Parameter(torch.randn((1, 1, emb_dim)), requires_grad=True)
+        self.pos_token = nn.Parameter(torch.randn((1, 17, emb_dim)), requires_grad=True)
 
     def forward(self, x):
         
         x = self.patch_conv(x) # [batch_size, emb_dim, num_patch**0.5, num_patch**0.5]
         x = x.permute((0, 2, 3, 1))
         x = x.flatten(1, 2) # [batch_size, num_patch, emb_dim]
-        x = torch.cat([self.clf_token, x], dim=1)
-        x = x + self.pos_token
+        
+        clf_token = self.clf_token.expand(x.shape[0], -1, -1)
+        pos_token = self.pos_token.expand(x.shape[0], -1, -1)
+        
+        x = torch.cat([clf_token, x], dim=1)
+        x = x + pos_token
 
         return x
     
@@ -40,18 +44,20 @@ class ConvStem(nn.Module):
         
         self.proj = nn.Linear(128, emb_dim, bias=False)
         
-        self.clf_token = nn.Parameter(torch.randn((batch_size, 1, emb_dim)), requires_grad=True)
+        self.clf_token = nn.Parameter(torch.randn((1, 1, emb_dim)), requires_grad=True)
         self.pos_token = nn.Parameter(torch.randn((batch_size, 17, emb_dim)), requires_grad=True)
 
     def forward(self, x):
         
-        x = self.conv_layers(x) # [batch_size, emb_dim, num_patch**0.5, num_patch**0.5]
+        x = self.conv_layers(x)
         x = x.permute((0, 2, 3, 1))
-        x = x.flatten(1, 2) # [batch_size, num_patch, emb_dim]
+        x = x.flatten(1, 2)
         
         x = self.proj(x)
         
-        x = torch.cat([self.clf_token, x], dim=1)
+        clf_token = self.clf_token.expand(x.shape[0], -1, -1)
+        
+        x = torch.cat([clf_token, x], dim=1)
         x = x + self.pos_token
 
         return x
@@ -85,18 +91,13 @@ class GatedMLP(nn.Module):
         
     
     def forward(self, x):
-        resid = x
+        resid = x     
         
         x = self.ln1(x)
-        
         x = F.gelu(self.linear1(x))
-        
         x1, x2 = torch.split(x, x.shape[-1] // 2, dim=-1)     
-        
         x2 = self.ln2(x2)
-        
         x2 = self.sgu(x2)
-        
         x = x1 * x2
         
         x = self.linear2(x) + resid

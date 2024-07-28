@@ -41,7 +41,7 @@ def train_model(model : ViT, optimizer, criterion, train_dl, test_dl, num_epochs
                 img = batch['img'].cuda()
                 labels = batch['label'].cuda()
                 
-                logits = model(img).logits
+                logits = model(img)
                 
                 loss = criterion(logits, labels)
             
@@ -70,7 +70,7 @@ def train_model(model : ViT, optimizer, criterion, train_dl, test_dl, num_epochs
                     img = batch['img'].cuda()
                     labels = batch['label'].cuda()
                     
-                    logits = model(img).logits
+                    logits = model(img)
                     
                     prob = F.softmax(logits, dim=-1)
                     
